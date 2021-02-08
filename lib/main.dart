@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expenses',
       theme: ThemeData(
         primarySwatch: Colors.pink,
-        accentColor: Colors.cyan,
+        accentColor: Colors.amber,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
@@ -49,12 +49,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime txDate) {
     Transaction newTx = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: txDate,
     );
 
     setState(() {
@@ -64,8 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
-        .where((element) =>
-            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .where(
+            (tx) => tx.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
         .toList();
   }
 
@@ -75,6 +75,12 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext bCtx) {
           return NewTransaction(_addTransaction);
         });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -99,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
               child: Chart(_recentTransactions),
             ),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),

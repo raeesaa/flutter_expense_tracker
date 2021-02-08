@@ -97,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
+    var actualHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -104,17 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Container(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.2,
+              height: actualHeight * 0.25,
               child: Chart(_recentTransactions),
             ),
             Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.8,
+              height: actualHeight * 0.75,
               child: TransactionList(_userTransactions, _deleteTransaction),
             ),
           ],

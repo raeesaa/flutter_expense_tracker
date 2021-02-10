@@ -98,6 +98,46 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(
+    double actualHeight,
+    Widget txListWidget,
+  ) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            'Show Chart',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Switch.adaptive(
+            activeColor: Theme.of(context).accentColor,
+            value: _showChart,
+            onChanged: _onChangeShowChart,
+          ),
+        ],
+      ),
+      _showChart
+          ? Container(
+              width: double.infinity,
+              height: actualHeight * 0.7,
+              child: Chart(_recentTransactions),
+            )
+          : txListWidget
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(double actualHeight, Widget txListWidget) {
+    return [
+      Container(
+        width: double.infinity,
+        height: actualHeight * 0.3,
+        child: Chart(_recentTransactions),
+      ),
+      txListWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -140,35 +180,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: [
           if (isLandscape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  'Show Chart',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                Switch.adaptive(
-                  activeColor: Theme.of(context).accentColor,
-                  value: _showChart,
-                  onChanged: _onChangeShowChart,
-                ),
-              ],
-            ),
+            ..._buildLandscapeContent(actualHeight, txListWidget),
           if (!isLandscape)
-            Container(
-              width: double.infinity,
-              height: actualHeight * 0.3,
-              child: Chart(_recentTransactions),
-            ),
-          if (!isLandscape) txListWidget,
-          if (isLandscape)
-            _showChart
-                ? Container(
-                    width: double.infinity,
-                    height: actualHeight * 0.7,
-                    child: Chart(_recentTransactions),
-                  )
-                : txListWidget,
+            ..._buildPortraitContent(actualHeight, txListWidget),
         ],
       ),
     );

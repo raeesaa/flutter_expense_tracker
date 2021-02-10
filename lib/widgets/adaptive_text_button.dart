@@ -15,7 +15,7 @@ class AdaptiveTextButton extends StatelessWidget {
         : TextButton(
             onPressed: _clickHandler,
             child: Text(
-              'Choose Date',
+              _title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           );

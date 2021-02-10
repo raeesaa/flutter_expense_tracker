@@ -54,9 +54,27 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransactions = [];
   bool _showChart = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print(state.toString());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
 
   void _addTransaction(String title, double amount, DateTime txDate) {
     Transaction newTx = Transaction(
@@ -96,6 +114,34 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _showChart = val;
     });
+  }
+
+  PreferredSizeWidget _buildiOSAppBar() {
+    return CupertinoNavigationBar(
+      middle: const Text(
+        'Personal Expenses',
+      ),
+      trailing: GestureDetector(
+        onTap: () => _startAddNewTransaction(context),
+        child: const Icon(
+          CupertinoIcons.add,
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAndroidAppBar() {
+    return AppBar(
+      title: const Text(
+        'Personal Expenses',
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context),
+        )
+      ],
+    );
   }
 
   List<Widget> _buildLandscapeContent(
@@ -143,29 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: const Text(
-              'Personal Expenses',
-            ),
-            trailing: GestureDetector(
-              onTap: () => _startAddNewTransaction(context),
-              child: const Icon(
-                CupertinoIcons.add,
-              ),
-            ),
-          )
-        : AppBar(
-            title: const Text(
-              'Personal Expenses',
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => _startAddNewTransaction(context),
-              )
-            ],
-          );
+    final PreferredSizeWidget appBar =
+        Platform.isIOS ? _buildiOSAppBar() : _buildAndroidAppBar();
 
     var actualHeight = mediaQuery.size.height -
         appBar.preferredSize.height -

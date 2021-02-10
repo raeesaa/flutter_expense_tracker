@@ -15,7 +15,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
         : ElevatedButton(
             onPressed: _clickHandler,
             child: Text(
-              'Choose Date',
+              _title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           );

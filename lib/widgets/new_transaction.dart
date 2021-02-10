@@ -8,16 +8,52 @@ import './adaptive_elevated_button.dart';
 class NewTransaction extends StatefulWidget {
   final Function onAddTransaction;
 
-  const NewTransaction(this.onAddTransaction);
+  NewTransaction(this.onAddTransaction) {
+    print('Contructor NewTransaction Widget');
+  }
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  _NewTransactionState createState() {
+    print('In createState');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime _selectedDate;
+
+  /**
+   * Lifecycle methods for stateful widget:
+   * 1. createState
+   * 2. initState - called only once
+   * 3. build() - called multiple times (first time when component is initialized and then on state change / media query change)
+   * 4. didUpdateWidget - on state change
+   * 5. dispose - when widget is destoyed
+   */
+
+  // _NewTransactionState() {
+  //   print('Contructor NewTransaction State');
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print('In intState');
+  // }
+
+  // @override
+  // void didUpdateWidget(covariant NewTransaction oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   print('In didUpdateWidget');
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   print('In dispose');
+  // }
 
   void _onSubmit() {
     final enteredTitle = _titleController.text;

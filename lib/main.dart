@@ -105,24 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text(
+            middle: const Text(
               'Personal Expenses',
             ),
             trailing: GestureDetector(
               onTap: () => _startAddNewTransaction(context),
-              child: Icon(
+              child: const Icon(
                 CupertinoIcons.add,
-                // onPressed: () => _startAddNewTransaction(context),
               ),
             ),
           )
         : AppBar(
-            title: Text(
+            title: const Text(
               'Personal Expenses',
             ),
             actions: [
               IconButton(
-                icon: Icon(Icons.add),
+                icon: const Icon(Icons.add),
                 onPressed: () => _startAddNewTransaction(context),
               )
             ],
@@ -185,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
             floatingActionButton: Platform.isIOS
                 ? null
                 : FloatingActionButton(
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                     onPressed: () => _startAddNewTransaction(context),
                   ),
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

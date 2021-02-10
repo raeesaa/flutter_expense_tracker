@@ -6,7 +6,7 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> _userTransactions;
   final Function _deleteTransaction;
 
-  TransactionList(this._userTransactions, this._deleteTransaction);
+  const TransactionList(this._userTransactions, this._deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TransactionList extends StatelessWidget {
         : ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return Card(
-                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                 elevation: 3,
                 child: ListTile(
                   leading: CircleAvatar(
@@ -63,11 +63,11 @@ class TransactionList extends StatelessWidget {
                             foregroundColor: MaterialStateProperty.all(
                                 Theme.of(context).errorColor),
                           ),
-                          icon: Icon(Icons.delete),
-                          label: Text('Delete'),
+                          icon: const Icon(Icons.delete),
+                          label: const Text('Delete'),
                         )
                       : IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,
                           onPressed: () =>
                               _deleteTransaction(_userTransactions[index].id)),

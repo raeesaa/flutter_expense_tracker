@@ -6,7 +6,7 @@ class AdaptiveTextButton extends StatelessWidget {
   final String _title;
   final Function _clickHandler;
 
-  AdaptiveTextButton(this._title, this._clickHandler);
+  const AdaptiveTextButton(this._title, this._clickHandler);
 
   @override
   Widget build(BuildContext context) {

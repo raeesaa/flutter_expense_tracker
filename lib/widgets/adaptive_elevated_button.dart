@@ -6,7 +6,7 @@ class AdaptiveElevatedButton extends StatelessWidget {
   final String _title;
   final Function _clickHandler;
 
-  AdaptiveElevatedButton(this._title, this._clickHandler);
+  const AdaptiveElevatedButton(this._title, this._clickHandler);
 
   @override
   Widget build(BuildContext context) {
